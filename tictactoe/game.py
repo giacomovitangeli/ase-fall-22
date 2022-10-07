@@ -1,6 +1,7 @@
 from itertools import cycle
 from typing import NamedTuple
 
+
 class Player(NamedTuple):
     label: str
     color: str
@@ -39,10 +40,7 @@ class Game:
 
     def _get_winning_combos(self):
         """Return all possible winning combinations, i.e. rows, columns and diagonals."""
-        rows = [
-            [(move.row, move.col) for move in row]
-            for row in self._current_moves
-        ]
+        rows = [[(move.row, move.col) for move in row] for row in self._current_moves]
         columns = [list(col) for col in zip(*rows)]
         first_diagonal = [row[i] for i, row in enumerate(rows)]
         second_diagonal = [col[j] for j, col in enumerate(reversed(columns))]
@@ -52,25 +50,18 @@ class Game:
         """Return True if move is valid, and False otherwise."""
         row, col = move.row, move.col
 
-        move_not_played=self._current_moves[row][col] == '' 
-        no_winner= not self._has_winner
-
-        # TODO: check that the current move has not been played already 
-        # and that there is no winner yet. Note that non-played cells
-        # contain an empty string (i.e. ""). 
-        # Use variables no_winner and move_not_played.
-        
+        move_not_played = self._current_moves[row][col] != ""
+        no_winner = not self._has_winner
         return no_winner and move_not_played
 
     def process_move(self, move):
         """Process the current move and check if it's a win."""
         row, col = move.row, move.col
         self._current_moves[row][col] = move
-        # TODO: check whether the current move leads to a winning combo.
-        # Do not return any values but set variables  self._has_winner 
-        # and self.winner_combo in case of winning combo.
-        # Hint: you can scan pre-computed winning combos in self._winning_combos
 
+        for combo in self._winning_combos:
+            if all(self._current_moves[r][c].label == move.label for r, c in combo):
+                self._has_winner = True
 
     def has_winner(self):
         """Return True if the game has a winner, and False otherwise."""
@@ -89,7 +80,7 @@ class Game:
     def toggle_player(self):
         """Return a toggled player."""
         self.current_player = next(self._players)
-        
+
     def reset_game(self):
         """Reset the game state to play again."""
         for row, row_content in enumerate(self._current_moves):

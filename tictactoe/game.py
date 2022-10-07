@@ -87,8 +87,7 @@ class Game:
 
     def toggle_player(self):
         """Return a toggled player."""
-        # TODO: switches self.current_player to the other player.
-        # Hint: https://docs.python.org/3/library/functions.html#next
+        self.current_player = next(self._players)
 
     def reset_game(self):
         """Reset the game state to play again."""
@@ -97,4 +96,3 @@ class Game:
                 row_content[col] = Move(row, col)
         self._has_winner = False
         self.winner_combo = []
-

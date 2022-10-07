@@ -49,6 +49,10 @@ class Game:
     def is_valid_move(self, move):
         """Return True if move is valid, and False otherwise."""
         row, col = move.row, move.col
+
+        move_not_played=self._current_moves[row][col] == ''
+        no_winner= not self._has_winner
+
         # TODO: check that the current move has not been played already
         # and that there is no winner yet. Note that non-played cells
         # contain an empty string (i.e. "").
@@ -82,8 +86,13 @@ class Game:
 
     def is_tied(self):
         """Return True if the game is tied, and False otherwise."""
-        # TODO: check whether a tie was reached.
-        # There is no winner and all moves have been tried.
+        return not self._has_winner and all(
+            [
+                self._current_moves[r][c].label != ""
+                for r in range(self.board_size)
+                for c in range(self.board_size)
+            ]
+        )
 
     def toggle_player(self):
         """Return a toggled player."""

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """A tic-tac-toe game built with Python and Tkinter."""
 from board import Board
 from game import Game

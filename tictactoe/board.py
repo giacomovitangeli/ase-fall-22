@@ -94,3 +94,4 @@ class Board(tk.Tk):
             button.config(highlightbackground="lightblue")
             button.config(text="")
             button.config(fg="black")
+
